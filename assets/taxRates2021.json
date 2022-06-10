@@ -1,0 +1,175 @@
+{
+    "taxRates": [
+        {
+            "primary": {
+                "taxRebate": 14958,
+                "taxThreshold": 83100,
+                "salaryBrackets": [
+                    {
+                        "minimumSalary": 83100,
+                        "maximumSalary": 205900,
+                        "taxableAbove": 83100,
+                        "taxRate": 0.18,
+                        "taxAmount": 0
+                    },
+                    {
+                        "minimumSalary": 205901,
+                        "maximumSalary": 321600,
+                        "taxableAbove": 205900,
+                        "taxRate": 0.26,
+                        "taxAmount": 37062
+                    },
+                    {
+                        "minimumSalary": 321601,
+                        "maximumSalary": 445100,
+                        "taxableAbove": 321600,
+                        "taxRate": 0.31,
+                        "taxAmount": 67144
+                    },
+                    {
+                        "minimumSalary": 445101,
+                        "maximumSalary": 584200,
+                        "taxableAbove": 445100,
+                        "taxRate": 0.36,
+                        "taxAmount": 105429
+                    },
+                    {
+                        "minimumSalary": 584201,
+                        "maximumSalary": 744800,
+                        "taxableAbove": 584200,
+                        "taxRate": 0.39,
+                        "taxAmount": 155505
+                    },
+                    {
+                        "minimumSalary": 744801,
+                        "maximumSalary": 1577300,
+                        "taxableAbove": 744800,
+                        "taxRate": 0.41,
+                        "taxAmount": 218139
+                    },
+                    {
+                        "minimumSalary": 1577301,
+                        "maximumSalary": null,
+                        "taxableAbove": 1577300,
+                        "taxRate": 0.45,
+                        "taxAmount": 559464
+                    }
+                ]
+            }
+        },
+        {
+            "secondary": {
+                "taxRebate": 8199,
+                "taxThreshold": 128650,
+                "salaryBrackets": [
+                    {
+                        "minimumSalary": 128650,
+                        "maximumSalary": 205900,
+                        "taxableAbove": 128650,
+                        "taxRate": 0.18,
+                        "taxAmount": 0
+                    },
+                    {
+                        "minimumSalary": 205901,
+                        "maximumSalary": 321600,
+                        "taxableAbove": 205900,
+                        "taxRate": 0.26,
+                        "taxAmount": 37062
+                    },
+                    {
+                        "minimumSalary": 321601,
+                        "maximumSalary": 445100,
+                        "taxableAbove": 321600,
+                        "taxRate": 0.31,
+                        "taxAmount": 67144
+                    },
+                    {
+                        "minimumSalary": 445101,
+                        "maximumSalary": 584200,
+                        "taxableAbove": 445100,
+                        "taxRate": 0.36,
+                        "taxAmount": 105429
+                    },
+                    {
+                        "minimumSalary": 584201,
+                        "maximumSalary": 744800,
+                        "taxableAbove": 584200,
+                        "taxRate": 0.39,
+                        "taxAmount": 155505
+                    },
+                    {
+                        "minimumSalary": 744801,
+                        "maximumSalary": 1577300,
+                        "taxableAbove": 744800,
+                        "taxRate": 0.41,
+                        "taxAmount": 218139
+                    },
+                    {
+                        "minimumSalary": 1577301,
+                        "maximumSalary": null,
+                        "taxableAbove": 1577300,
+                        "taxRate": 0.45,
+                        "taxAmount": 559464
+                    }
+                ]
+            }
+        },
+        {
+            "tertiary": {
+                "taxRebate": 2736,
+                "taxThreshold": 143850,
+                "salaryBrackets": [
+                    {
+                        "minimumSalary": 143850,
+                        "maximumSalary": 205900,
+                        "taxableAbove": 143850,
+                        "taxRate": 0.18,
+                        "taxAmount": 0
+                    },
+                    {
+                        "minimumSalary": 205901,
+                        "maximumSalary": 321600,
+                        "taxableAbove": 205900,
+                        "taxRate": 0.26,
+                        "taxAmount": 37062
+                    },
+                    {
+                        "minimumSalary": 321601,
+                        "maximumSalary": 445100,
+                        "taxableAbove": 321600,
+                        "taxRate": 0.31,
+                        "taxAmount": 67144
+                    },
+                    {
+                        "minimumSalary": 445101,
+                        "maximumSalary": 584200,
+                        "taxableAbove": 445100,
+                        "taxRate": 0.36,
+                        "taxAmount": 105429
+                    },
+                    {
+                        "minimumSalary": 584201,
+                        "maximumSalary": 744800,
+                        "taxableAbove": 584200,
+                        "taxRate": 0.39,
+                        "taxAmount": 155505
+                    },
+                    {
+                        "minimumSalary": 744801,
+                        "maximumSalary": 1577300,
+                        "taxableAbove": 744800,
+                        "taxRate": 0.41,
+                        "taxAmount": 218139
+                    },
+                    {
+                        "minimumSalary": 1577301,
+                        "maximumSalary": null,
+                        "taxableAbove": 1577300,
+                        "taxRate": 0.45,
+                        "taxAmount": 559464
+                    }
+                ]
+            }
+        }
+    ]
+}

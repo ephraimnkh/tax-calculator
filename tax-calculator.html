@@ -2,24 +2,16 @@
 <html>
     <head>
         <title>Tax Calculator</title>
-        <script src="TaxCalculator.js"></script>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/dev.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <form>
-            <h1>Tax Calculator</h1>
-            <label>Enter your income:</label>
-            <input type="number" id="income">
-            <button type="button" onclick="calculateTax(); calculateTax2021();">Calculate</button>
-            <h2>2020 Tax Rates</h2>
-            <p id="answer"></p>
-            <p id="monthlyAnswer"></p>
-            <h2>2021 Tax Rates</h2>
-            <p id="answer2021"></p>
-            <p id="monthlyAnswer2021"></p>
-        </form>
-        <br>
-        <form>
-            
-        </form>
+        <div id="tax-form"></div>
+        <!-- React Components -->
+        <script src="js/TaxForm.js"></script>
+        <script src="js/TaxCalculator.js"></script>
     </body>
 </html>
