@@ -1,0 +1,11 @@
+body {
+    background-color:#212529 !important;
+    color: #fff !important;
+}
+
+.form-control,
+.form-select {
+    background-color:#212529 !important;
+    color: #fff !important;
+    border-color: #494949 !important;
+}

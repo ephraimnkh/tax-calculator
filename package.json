@@ -108,15 +108,18 @@
     "copy-descriptor": "^0.1.1",
     "core-js": "^2.6.12",
     "core-util-is": "^1.0.3",
+    "cors": "^2.8.5",
     "debug": "^2.6.9",
     "decode-uri-component": "^0.2.0",
     "define-property": "^2.0.2",
     "detect-indent": "^4.0.0",
+    "ejs": "^3.1.8",
     "electron-to-chromium": "^1.4.151",
     "escape-string-regexp": "^1.0.5",
     "esutils": "^2.0.3",
     "expand-brackets": "^0.1.5",
     "expand-range": "^1.8.2",
+    "express": "^4.18.1",
     "extend-shallow": "^3.0.2",
     "extglob": "^0.3.2",
     "file-uri-to-path": "^1.0.0",
@@ -246,7 +249,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod"
+    "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
+    "start": "node ./helpers/taxExtractor.mjs && open views/index.html && nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -254,5 +258,8 @@
   "bugs": {
     "url": "https://github.com/ephraimnkh/tax-calculator/issues"
   },
-  "homepage": "https://github.com/ephraimnkh/tax-calculator#readme"
+  "homepage": "https://github.com/ephraimnkh/tax-calculator#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
 }

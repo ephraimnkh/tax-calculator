@@ -12,53 +12,225 @@ var TaxForm = function (_React$Component) {
     function TaxForm(props) {
         _classCallCheck(this, TaxForm);
 
-        return _possibleConstructorReturn(this, (TaxForm.__proto__ || Object.getPrototypeOf(TaxForm)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (TaxForm.__proto__ || Object.getPrototypeOf(TaxForm)).call(this, props));
+
+        _this.state = { income: '', age: '', taxYear: 2023, monthOrYear: 'month', taxMessage: '' };
+        _this.handleIncomeChange = _this.handleIncomeChange.bind(_this);
+        _this.handleMonthOrYearChange = _this.handleMonthOrYearChange.bind(_this);
+        _this.handleAgeChange = _this.handleAgeChange.bind(_this);
+        _this.handleTaxYearChange = _this.handleTaxYearChange.bind(_this);
+        _this.calculate = _this.calculate.bind(_this);
+        return _this;
     }
 
     _createClass(TaxForm, [{
-        key: "render",
+        key: 'handleIncomeChange',
+        value: function handleIncomeChange(e) {
+            this.setState({ income: e.target.value });
+        }
+    }, {
+        key: 'handleMonthOrYearChange',
+        value: function handleMonthOrYearChange(e) {
+            this.setState({ monthOrYear: e.target.value });
+        }
+    }, {
+        key: 'handleAgeChange',
+        value: function handleAgeChange(e) {
+            this.setState({ age: e.target.value });
+        }
+    }, {
+        key: 'handleTaxYearChange',
+        value: function handleTaxYearChange(e) {
+            this.setState({ taxYear: parseInt(e.target.value) });
+        }
+    }, {
+        key: 'calculate',
+        value: function calculate() {
+            var _this2 = this;
+
+            fetch('http://localhost:8080/calculate-tax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    income: this.state.income,
+                    monthOrYear: this.state.monthOrYear,
+                    age: this.state.age,
+                    taxYear: this.state.taxYear
+                })
+            }).then(function (res) {
+                return res.json();
+            }).then(function (res) {
+                _this2.setState({ taxMessage: res.message });
+            }).catch(function (error) {
+                alert('Error will using node server for calculating tax: ' + error);
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
-            return React.createElement(
-                "form",
-                { className: "mx-4" },
-                React.createElement(
-                    "h1",
+            var taxMessageComponent = "";
+            // console.log(this.state.taxMessage);
+            // console.log(this.state.taxMessage.length > 0);
+            var noTax = "Bruh, lucky you, you don't need to pay any tax";
+            var taxComponent = void 0;
+            if (this.state.taxMessage.monthOrYear === 'month' || this.state.taxMessage.monthOrYear === 'year') {
+                taxComponent = React.createElement(
+                    'div',
                     null,
-                    "Tax Calculator"
-                ),
-                React.createElement(
-                    "div",
-                    { className: "row mb-3" },
                     React.createElement(
-                        "label",
-                        { "for": "income", className: "form-label" },
-                        "Enter your income: "
+                        'h2',
+                        null,
+                        'Take home pay:'
                     ),
-                    React.createElement("input", { className: "form-control ms-2 w-25", type: "number", id: "income" })
+                    React.createElement(
+                        'h1',
+                        null,
+                        this.state.taxMessage.takeHome
+                    ),
+                    React.createElement(
+                        'h2',
+                        null,
+                        'Yearly Tax:'
+                    ),
+                    React.createElement(
+                        'h1',
+                        null,
+                        'R',
+                        this.state.taxMessage.yearlyTax
+                    )
+                );
+            } else {
+                taxComponent = noTax;
+            }
+
+            var monthlyTaxComponent = void 0;
+            if (this.state.taxMessage.monthOrYear === 'month') monthlyTaxComponent = React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'h2',
+                    null,
+                    'Monthly Tax:'
                 ),
                 React.createElement(
-                    "div",
-                    { className: "row" },
+                    'h1',
+                    null,
+                    'R',
+                    this.state.taxMessage.monthlyTax
+                )
+            );
+            if (this.state.taxMessage) {
+                taxMessageComponent = React.createElement(
+                    'div',
+                    { className: 'mt-3' },
+                    taxComponent,
+                    monthlyTaxComponent
+                );
+            }
+            return React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    { className: 'col-4' },
                     React.createElement(
-                        "button",
-                        { className: "btn btn-primary ms-2 col-1", type: "button", onclick: "calculateTax(); calculateTax2021();" },
-                        "Calculate"
+                        'form',
+                        { className: 'mx-4' },
+                        React.createElement(
+                            'h3',
+                            null,
+                            'SARS Income Tax Calculator'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'row mb-3' },
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'income', className: 'form-label' },
+                                'Enter your income: '
+                            ),
+                            React.createElement('input', { className: 'form-control ms-2 w-75', type: 'number', id: 'income', name: 'income', value: this.state.income, onChange: this.handleIncomeChange })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'row mb-3' },
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'income', className: 'form-label' },
+                                'Is the specified income for a month or a year?'
+                            ),
+                            React.createElement(
+                                'select',
+                                { className: 'form-select ms-2 w-75', name: 'monthOrYear', id: 'monthOrYear', value: this.state.monthOrYear, onChange: this.handleMonthOrYearChange },
+                                React.createElement(
+                                    'option',
+                                    { value: 'month' },
+                                    'month'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: 'year' },
+                                    'year'
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'row mb-3' },
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'income', className: 'form-label' },
+                                'Enter your age: '
+                            ),
+                            React.createElement('input', { className: 'form-control ms-2 w-75', type: 'number', id: 'age', name: 'age', value: this.state.age, onChange: this.handleAgeChange })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'row mb-3' },
+                            React.createElement(
+                                'label',
+                                { htmlFor: 'income', className: 'form-label' },
+                                'Pick a tax year: '
+                            ),
+                            React.createElement(
+                                'select',
+                                { className: 'form-select ms-2 w-75', name: 'taxYear', id: 'taxYear', value: this.state.taxYear, onChange: this.handleTaxYearChange },
+                                React.createElement(
+                                    'option',
+                                    { value: '2023' },
+                                    '2023'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: '2022' },
+                                    '2022'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: '2021' },
+                                    '2021'
+                                ),
+                                React.createElement(
+                                    'option',
+                                    { value: '2020' },
+                                    '2020'
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'button',
+                            { className: 'btn btn-primary', type: 'button', onClick: this.calculate },
+                            'Calculate Tax'
+                        )
                     )
                 ),
                 React.createElement(
-                    "h2",
-                    null,
-                    "2020 Tax Rates"
-                ),
-                React.createElement("p", { id: "answer" }),
-                React.createElement("p", { id: "monthlyAnswer" }),
-                React.createElement(
-                    "h2",
-                    null,
-                    "2021 Tax Rates"
-                ),
-                React.createElement("p", { id: "answer2021" }),
-                React.createElement("p", { id: "monthlyAnswer2021" })
+                    'div',
+                    { className: 'col-8' },
+                    taxMessageComponent
+                )
             );
         }
     }]);
