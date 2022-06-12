@@ -56,7 +56,7 @@ class TaxForm extends React.Component {
         if (this.state.taxMessage.monthOrYear === 'month' || this.state.taxMessage.monthOrYear === 'year') {
             taxComponent = (
                 <div>
-                    <h2>Take home pay:</h2>
+                    <h2>Take home pay <span> = Income - (UIF + Monthly Tax)</span>:</h2>
                     <h1>{this.state.taxMessage.takeHome}</h1>
                     <h2>Yearly Tax:</h2>
                     <h1>R{this.state.taxMessage.yearlyTax}</h1>

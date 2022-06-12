@@ -82,7 +82,13 @@ var TaxForm = function (_React$Component) {
                     React.createElement(
                         'h2',
                         null,
-                        'Take home pay:'
+                        'Take home pay ',
+                        React.createElement(
+                            'span',
+                            null,
+                            ' = Income - (UIF + Monthly Tax)'
+                        ),
+                        ':'
                     ),
                     React.createElement(
                         'h1',

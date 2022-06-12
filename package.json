@@ -248,9 +248,9 @@
     "wrappy": "^1.0.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
-    "start": "node ./helpers/taxExtractor.mjs && open views/index.html && nodemon server.js"
+    "start": "node ./helpers/taxExtractor.mjs && open http://localhost:8080/ && nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -260,6 +260,11 @@
   },
   "homepage": "https://github.com/ephraimnkh/tax-calculator#readme",
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "babel-jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.16",
+    "react-test-renderer": "^18.1.0"
   }
 }

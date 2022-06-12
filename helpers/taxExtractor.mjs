@@ -30,9 +30,10 @@ function extractTaxInfo(taxInfo, group, year){
     });
 
     taxRatesObj = Object.assign(taxRatesObj, { [group]: {
-        taxRebate: getRebate(group, year),
-        taxThreshold: getThreshold(group, year),
-        salaryBrackets: salaryBrackets }
+            taxRebate: getRebate(group, year),
+            taxThreshold: getThreshold(group, year),
+            salaryBrackets: salaryBrackets 
+        }
     });
 
     taxRateObjects.push(taxRatesObj);
