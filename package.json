@@ -249,8 +249,9 @@
   },
   "scripts": {
     "test": "jest",
+    "generate-files": "node ./helpers/taxExtractor.mjs",
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
-    "start": "node ./helpers/taxExtractor.mjs && open http://localhost:8080/ && nodemon server.js"
+    "start": "nodemon server.js && open http://localhost:8080/"
   },
   "keywords": [],
   "author": "",
