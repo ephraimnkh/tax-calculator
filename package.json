@@ -251,7 +251,8 @@
     "test": "jest",
     "generate-files": "node ./helpers/taxExtractor.mjs",
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
-    "start": "nodemon server.js && open http://localhost:8080/"
+    "dev": "nodemon server.js && open http://localhost:8080/",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
