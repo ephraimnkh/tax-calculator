@@ -1,12 +1,12 @@
 {
     "taxRates": [{
         "primary": {
-            "taxRebate": 14220,
-            "taxThreshold": 79000,
+            "taxRebate": 14067,
+            "taxThreshold": 78150,
             "salaryBrackets": [{
-                "minimumSalary": 79000,
+                "minimumSalary": 78150,
                 "maximumSalary": 195850,
-                "taxableAbove": 79000,
+                "taxableAbove": 78150,
                 "taxRate": 0.18,
                 "taxAmount": 0
             }, {
@@ -49,12 +49,12 @@
         }
     }, {
         "secondary": {
-            "taxRebate": 7794,
-            "taxThreshold": 122300,
+            "taxRebate": 7713,
+            "taxThreshold": 121000,
             "salaryBrackets": [{
-                "minimumSalary": 122300,
+                "minimumSalary": 121000,
                 "maximumSalary": 195850,
-                "taxableAbove": 122300,
+                "taxableAbove": 121000,
                 "taxRate": 0.18,
                 "taxAmount": 0
             }, {
@@ -97,12 +97,12 @@
         }
     }, {
         "tertiary": {
-            "taxRebate": 2601,
-            "taxThreshold": 136750,
+            "taxRebate": 2574,
+            "taxThreshold": 135300,
             "salaryBrackets": [{
-                "minimumSalary": 136750,
+                "minimumSalary": 135300,
                 "maximumSalary": 195850,
-                "taxableAbove": 136750,
+                "taxableAbove": 135300,
                 "taxRate": 0.18,
                 "taxAmount": 0
             }, {

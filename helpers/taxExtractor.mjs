@@ -12,6 +12,7 @@ function getRebate(group, year){
 
 function getThreshold(group, year){
     let thresholdIndex = taxThresholds.findIndex(threshold => threshold.year === year);
+    // console.log('taxThresholds', taxThresholds);
     return taxThresholds[thresholdIndex][group];
 }
 
@@ -49,7 +50,7 @@ function calculateTax(taxInfo, group, year){
         taxAmount: 0
     };
 
-    if (taxInfo.includes('and above') && taxInfo.includes('taxable income above')){
+    if ((taxInfo.includes('and above') && taxInfo.includes('taxable income above')) || (taxInfo.includes('and above') && taxInfo.includes('the amount above'))){
         let minimumSalary = removeAllWhitespace(taxInfo.substring(0, taxInfo.indexOf('and')));
         taxInfo = taxInfo.replace(/\t/g, '  ');
         let maximumSalary = null;
@@ -63,7 +64,7 @@ function calculateTax(taxInfo, group, year){
         salaryBracketObj.taxAmount = parseInt(taxAmount);
         salaryBracketObj.taxableAbove = parseInt(taxableAbove);
         salaryBracketObj.taxRate = taxRate;
-    } else if (taxInfo.includes('taxable income above')){
+    } else if (taxInfo.includes('taxable income above') || taxInfo.includes('the amount above')){
         let minimumSalary = removeAllWhitespace(taxInfo.substring(0, taxInfo.indexOf('–')));
         taxInfo = taxInfo.replace(/\t/g, '  ');
         let maximumSalary = removeAllWhitespace(taxInfo.substring(taxInfo.indexOf('–') + 1, taxInfo.indexOf('  ')));

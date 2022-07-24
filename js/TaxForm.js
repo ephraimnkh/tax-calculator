@@ -14,7 +14,7 @@ var TaxForm = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (TaxForm.__proto__ || Object.getPrototypeOf(TaxForm)).call(this, props));
 
-        _this.state = { income: '', age: '', taxYear: 2023, monthOrYear: 'month', taxMessage: '' };
+        _this.state = { income: '', age: '', taxYear: 2023, monthOrYear: 'month', taxMessage: '', years: [] };
         _this.handleIncomeChange = _this.handleIncomeChange.bind(_this);
         _this.handleMonthOrYearChange = _this.handleMonthOrYearChange.bind(_this);
         _this.handleAgeChange = _this.handleAgeChange.bind(_this);
@@ -44,9 +44,22 @@ var TaxForm = function (_React$Component) {
             this.setState({ taxYear: parseInt(e.target.value) });
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            fetch('http://localhost:8080/tax-years').then(function (res) {
+                return res.json();
+            }).then(function (res) {
+                _this2.setState({ years: res.taxYears });
+            }).catch(function (error) {
+                alert('Error will using node server for calculating tax: ' + error);
+            });
+        }
+    }, {
         key: 'calculate',
         value: function calculate() {
-            var _this2 = this;
+            var _this3 = this;
 
             fetch('http://localhost:8080/calculate-tax', {
                 method: 'POST',
@@ -62,7 +75,7 @@ var TaxForm = function (_React$Component) {
             }).then(function (res) {
                 return res.json();
             }).then(function (res) {
-                _this2.setState({ taxMessage: res.message });
+                _this3.setState({ taxMessage: res.message });
             }).catch(function (error) {
                 alert('Error will using node server for calculating tax: ' + error);
             });
@@ -135,12 +148,13 @@ var TaxForm = function (_React$Component) {
                     monthlyTaxComponent
                 );
             }
+            var taxYears = this.state.years;
             return React.createElement(
                 'div',
                 { className: 'row' },
                 React.createElement(
                     'div',
-                    { className: 'col-4' },
+                    { className: 'col-lg-4 col-md-6' },
                     React.createElement(
                         'form',
                         { className: 'mx-4' },
@@ -157,7 +171,7 @@ var TaxForm = function (_React$Component) {
                                 { htmlFor: 'income', className: 'form-label' },
                                 'Enter your income: '
                             ),
-                            React.createElement('input', { className: 'form-control ms-2 w-75', type: 'number', id: 'income', name: 'income', value: this.state.income, onChange: this.handleIncomeChange })
+                            React.createElement('input', { className: 'form-control ms-2', type: 'number', id: 'income', name: 'income', value: this.state.income, onChange: this.handleIncomeChange })
                         ),
                         React.createElement(
                             'div',
@@ -169,7 +183,7 @@ var TaxForm = function (_React$Component) {
                             ),
                             React.createElement(
                                 'select',
-                                { className: 'form-select ms-2 w-75', name: 'monthOrYear', id: 'monthOrYear', value: this.state.monthOrYear, onChange: this.handleMonthOrYearChange },
+                                { className: 'form-select ms-2', name: 'monthOrYear', id: 'monthOrYear', value: this.state.monthOrYear, onChange: this.handleMonthOrYearChange },
                                 React.createElement(
                                     'option',
                                     { value: 'month' },
@@ -190,7 +204,7 @@ var TaxForm = function (_React$Component) {
                                 { htmlFor: 'income', className: 'form-label' },
                                 'Enter your age: '
                             ),
-                            React.createElement('input', { className: 'form-control ms-2 w-75', type: 'number', id: 'age', name: 'age', value: this.state.age, onChange: this.handleAgeChange })
+                            React.createElement('input', { className: 'form-control ms-2', type: 'number', id: 'age', name: 'age', value: this.state.age, onChange: this.handleAgeChange })
                         ),
                         React.createElement(
                             'div',
@@ -202,27 +216,14 @@ var TaxForm = function (_React$Component) {
                             ),
                             React.createElement(
                                 'select',
-                                { className: 'form-select ms-2 w-75', name: 'taxYear', id: 'taxYear', value: this.state.taxYear, onChange: this.handleTaxYearChange },
-                                React.createElement(
-                                    'option',
-                                    { value: '2023' },
-                                    '2023'
-                                ),
-                                React.createElement(
-                                    'option',
-                                    { value: '2022' },
-                                    '2022'
-                                ),
-                                React.createElement(
-                                    'option',
-                                    { value: '2021' },
-                                    '2021'
-                                ),
-                                React.createElement(
-                                    'option',
-                                    { value: '2020' },
-                                    '2020'
-                                )
+                                { className: 'form-select ms-2', name: 'taxYear', id: 'taxYear', value: this.state.taxYear, onChange: this.handleTaxYearChange },
+                                taxYears.map(function (year) {
+                                    return React.createElement(
+                                        'option',
+                                        { key: year, value: year },
+                                        year
+                                    );
+                                })
                             )
                         ),
                         React.createElement(

@@ -1,47 +1,57 @@
+const fs = require('fs-extra');
+
 module.exports = {
-    calculateTax: function (data, income, year, age, monthOrYear) {
+    calculateTax: function (income, year, age, monthOrYear) {
         if (monthOrYear === 'month') income *= 12;
         let taxGroup;
         if (age >= 18 && age < 65) taxGroup = 'primary';
         else if (age >= 65 && age < 75) taxGroup = 'secondary';
         else if (age >= 75 && age <= 130) taxGroup = 'tertiary';
-        let taxFile;
-        taxFile = JSON.parse(data);
+        // let taxFile = JSON.parse(data);
+        let taxFile = JSON.parse(fs.readFileSync(`assets/taxRates${year}.json`));
         let taxRatesIndex = taxFile.taxRates.findIndex(taxRate => taxGroup in taxRate);
         let taxRateObj = taxFile.taxRates[taxRatesIndex][taxGroup];
         let taxRebate = taxRateObj['taxRebate'];
         
         let taxThreshold = taxRateObj['taxThreshold'];
         if (income < taxThreshold) {
-            return { 
-                monthOrYear: null
+            return {
+                yearlyTax: 0,
+                monthlyTax: 0,
+                takeHome: (income / 12) - ((income / 12) * 0.01),
+                monthOrYear: 'month'
             };
         }
+
+        const taxBrackets = [];
+
+        taxRateObj.salaryBrackets.forEach(salaryBracket => {
+            taxBrackets.push(salaryBracket);
+        });
     
-        let taxBracket1 = taxRateObj.salaryBrackets[0];
-        let taxBracket2 = taxRateObj.salaryBrackets[1];
-        let taxBracket3 = taxRateObj.salaryBrackets[2];
-        let taxBracket4 = taxRateObj.salaryBrackets[3];
-        let taxBracket5 = taxRateObj.salaryBrackets[4];
-        let taxBracket6 = taxRateObj.salaryBrackets[5];
-        let taxBracket7 = taxRateObj.salaryBrackets[6];
-    
-        let taxBracket;
         let useRebate = true;
-        if (income > taxBracket1.minimumSalary && income <= taxBracket1.maximumSalary) {
-            taxBracket = taxRateObj.salaryBrackets[0];
-            useRebate = false;
-        }
-        if (income >= taxBracket2.minimumSalary && income <= taxBracket2.maximumSalary) taxBracket = taxRateObj.salaryBrackets[1];
-        if (income >= taxBracket3.minimumSalary && income <= taxBracket3.maximumSalary) taxBracket = taxRateObj.salaryBrackets[2];
-        if (income >= taxBracket4.minimumSalary && income <= taxBracket4.maximumSalary) taxBracket = taxRateObj.salaryBrackets[3];
-        if (income >= taxBracket5.minimumSalary && income <= taxBracket5.maximumSalary) taxBracket = taxRateObj.salaryBrackets[4];
-        if (income >= taxBracket6.minimumSalary && income <= taxBracket6.maximumSalary) taxBracket = taxRateObj.salaryBrackets[5];
-        if (income >= taxBracket7.minimumSalary) taxBracket = taxRateObj.salaryBrackets[6];
-        
+        let currentTaxBracket;
+
+        taxBrackets.forEach((taxBracket, index, array) => {
+            if (index === 0){
+                if (income > taxBracket.minimumSalary && income <= taxBracket.maximumSalary){
+                    currentTaxBracket = taxBracket;
+                    useRebate = false;
+                }
+            } 
+            if (index !== 0 && index < array.length - 1) {
+                if (income >= taxBracket.minimumSalary && income <= taxBracket.maximumSalary)
+                    currentTaxBracket = taxBracket;
+            } 
+            if (index === array.length - 1) {
+                if (income >= taxBracket.minimumSalary)
+                    currentTaxBracket = taxBracket;
+            }
+        });
+
         let message;
-        if (monthOrYear === 'month') message = monthlyTaxResponse(income, taxBracket.taxableAbove, taxBracket.taxRate, taxBracket.taxAmount, taxRebate, useRebate);
-        if (monthOrYear === 'year') message = yearlyTaxResponse(income, taxBracket.taxableAbove, taxBracket.taxRate, taxBracket.taxAmount, taxRebate, useRebate);
+        if (monthOrYear === 'month') message = monthlyTaxResponse(income, currentTaxBracket.taxableAbove, currentTaxBracket.taxRate, currentTaxBracket.taxAmount, taxRebate, useRebate);
+        if (monthOrYear === 'year') message = yearlyTaxResponse(income, currentTaxBracket.taxableAbove, currentTaxBracket.taxRate, currentTaxBracket.taxAmount, taxRebate, useRebate);
         return message;
     }
 };
@@ -87,11 +97,3 @@ function writeMessage (message){
     let messageHolder = document.getElementById('message');
     messageHolder.innerHTML = message;
 }
-
-// let monthlyIncome = 15000;
-// let yearlyIncome = 180000;
-// let taxYear = 2023;
-// let age = 25;
-
-// calculateTax(monthlyIncome, taxYear, age, 'month');
-// calculateTax(yearlyIncome, taxYear, age, 'year');
