@@ -4,3 +4,5 @@ node_modules
 # Files
 stuff.txt
 css/dev.css
+assets/*.json
+config/taxConfig.js

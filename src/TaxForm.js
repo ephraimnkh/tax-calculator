@@ -1,7 +1,7 @@
 class TaxForm extends React.Component {
     constructor(props){
         super(props);
-        this.state = {income: '', age: '', taxYear: 2023, monthOrYear: 'month', taxMessage: '', years: []};
+        this.state = {income: '', age: '', taxYear: 2023, monthOrYear: 'month', taxObject: '', years: []};
         this.handleIncomeChange = this.handleIncomeChange.bind(this);
         this.handleMonthOrYearChange = this.handleMonthOrYearChange.bind(this);
         this.handleAgeChange = this.handleAgeChange.bind(this);
@@ -51,7 +51,7 @@ class TaxForm extends React.Component {
         })
         .then(res => res.json())
         .then(res => {
-            this.setState({ taxMessage: res.message });
+            this.setState({ taxObject: res.message });
         })
         .catch(error => {
             alert(`Error will using node server for calculating tax: ${error}`);
@@ -60,45 +60,59 @@ class TaxForm extends React.Component {
 
     render(){
         let taxMessageComponent = "";
-        // console.log(this.state.taxMessage);
-        // console.log(this.state.taxMessage.length > 0);
-        let noTax = "Bruh, lucky you, you don't need to pay any tax";
+        const noTax = (<div><h2>Lucky you, you don't need to pay any tax</h2></div>);
         let taxComponent;
-        if (this.state.taxMessage.monthOrYear === 'month' || this.state.taxMessage.monthOrYear === 'year') {
+        if (this.state.taxObject.monthlyTax > 0 && this.state.taxObject.yearlyTax > 0) {
             taxComponent = (
                 <div>
-                    <h2>Take home pay <span> = Income - (UIF + Monthly Tax)</span>:</h2>
-                    <h1>{this.state.taxMessage.takeHome}</h1>
-                    <h2>Yearly Tax:</h2>
-                    <h1>R{this.state.taxMessage.yearlyTax}</h1>
+                    <h2>Take home pay <span> = Monthly Income - Monthly Tax</span>:</h2>
+                    <h1>{this.state.taxObject.takeHome}</h1>
                 </div>
             );
         } else {
             taxComponent = noTax;
         }
 
-        let monthlyTaxComponent;
-        if (this.state.taxMessage.monthOrYear === 'month') monthlyTaxComponent = (
+        const monthlyTaxComponent = (
             <div>
                 <h2>Monthly Tax:</h2>
-                <h1>R{this.state.taxMessage.monthlyTax}</h1>
+                <h1>R{this.state.taxObject.monthlyTax}</h1>
             </div>
         );
-        if (this.state.taxMessage){
-            taxMessageComponent = (
-            <div className="mt-3">
-                {taxComponent}
-                {monthlyTaxComponent}
-            </div>);
+        const yearlyTaxComponent = (
+            <div>
+                <h2>Yearly Tax:</h2>
+                <h1>R{this.state.taxObject.yearlyTax}</h1>
+            </div>
+        );
+
+        const disclaimer = `Your actual take home may vary based on other deductions like UIF, Medical Aid etc.`;
+        if (this.state.taxObject){
+            if (this.state.taxObject.monthlyTax > 0 && this.state.taxObject.yearlyTax > 0) {
+                taxMessageComponent = (
+                <div className="mt-3">
+                    {taxComponent}
+                    {monthlyTaxComponent}
+                    {yearlyTaxComponent}
+                    <div className="text-secondary text-small">
+                        {disclaimer}
+                    </div>
+                </div>);
+            } else {
+                taxMessageComponent = (
+                <div className="mt-3">
+                    {taxComponent}
+                </div>);
+            }
         }
-        let taxYears = this.state.years;
+        const taxYears = this.state.years;
         return (
             <div className="row">
                 <div className="col-lg-4 col-md-6">
                     <form className="mx-4">
                         <h3>SARS Income Tax Calculator</h3>
                         <div className="row mb-3">
-                            <label htmlFor="income" className="form-label">Enter your income: </label>
+                            <label htmlFor="income" className="form-label">Enter your income:</label>
                             <input className="form-control ms-2" type="number" id="income" name="income"  value={this.state.income} onChange={this.handleIncomeChange}/>
                         </div>
                         <div className="row mb-3">
@@ -109,11 +123,11 @@ class TaxForm extends React.Component {
                             </select>
                         </div>
                         <div className="row mb-3">
-                            <label htmlFor="income" className="form-label">Enter your age: </label>
+                            <label htmlFor="income" className="form-label">Enter your age:</label>
                             <input className="form-control ms-2" type="number" id="age" name="age"  value={this.state.age} onChange={this.handleAgeChange}/>
                         </div>
                         <div className="row mb-3">
-                            <label htmlFor="income" className="form-label">Pick a tax year: </label>
+                            <label htmlFor="income" className="form-label">Pick a tax year:</label>
                             <select className="form-select ms-2" name="taxYear" id="taxYear"  value={this.state.taxYear} onChange={this.handleTaxYearChange}>
                                 {taxYears.map((year) => {
                                     return <option key={year} value={year}>{year}</option>

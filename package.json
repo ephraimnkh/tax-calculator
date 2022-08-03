@@ -86,11 +86,13 @@
   },
   "scripts": {
     "test": "jest",
-    "generate-files": "node ./helpers/taxExtractor.mjs",
+    "generate-tax-files": "node ./helpers/taxExtractor.mjs",
+    "generate-tax-config": "node generate-tax-config.js",
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
     "dev": "nodemon server.js",
-    "start:dev": "concurrently \"npm run jsxpp\" \"npm run dev\"",
-    "start": "node server.js"
+    "start:dev": "concurrently \"npm run setup-app\" \"npm run jsxpp\" \"npm run dev\"",
+    "start": "node server.js",
+    "setup-app": "npm run generate-tax-config && npm run generate-tax-files"
   },
   "keywords": [],
   "author": "",

@@ -104,11 +104,13 @@ function removeAllWhitespace(text){
 }
 
 years.forEach(year => {
-    groups.forEach(group => {
-        extractTaxInfo(taxInfo['year' + year], group, year);
-    });
-    saveDataToFileInAssets({taxRates: taxRateObjects}, `taxRates${year}.json`);
-    taxRateObjects = [];
+    if (!fs.existsSync(`assets/taxRates${year}.json`)) {
+        groups.forEach(group => {
+            extractTaxInfo(taxInfo['year' + year], group, year);
+        });
+        saveDataToFileInAssets({taxRates: taxRateObjects}, `taxRates${year}.json`);
+        taxRateObjects = [];
+    }
 });
 
 
