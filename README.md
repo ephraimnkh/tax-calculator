@@ -2,8 +2,6 @@
 
 Just a fun little project to calculate how much tax you owe in South Africa.
 
-If you would like to see this app running live [click here](https://thoughtful-bull-overcoat.cyclic.app/).
-
 Use `npm install` to get all the neccessary node packages for the Tax Calculator.
 
 Use `npm run jsxpp` to run the jsx preprocessor.
