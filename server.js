@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const ejs = require('ejs');
 const app = express();
-const port = 8080;
+// Ready to work with dynamic ports on Heroku
+const port = process.env.PORT ? process.env.PORT : 8080;
 
 app.use(cors());
 
