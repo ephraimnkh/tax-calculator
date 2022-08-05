@@ -26,7 +26,7 @@ class TaxForm extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/tax-years')
+        fetch('/tax-years')
         .then(res => res.json())
         .then(res => {
             this.setState({ years: res.taxYears });
@@ -37,7 +37,7 @@ class TaxForm extends React.Component {
     }
 
     calculate() {
-        fetch('http://localhost:8080/calculate-tax', {
+        fetch('/calculate-tax', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

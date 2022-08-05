@@ -48,7 +48,7 @@ var TaxForm = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            fetch('http://localhost:8080/tax-years').then(function (res) {
+            fetch('/tax-years').then(function (res) {
                 return res.json();
             }).then(function (res) {
                 _this2.setState({ years: res.taxYears });
@@ -61,7 +61,7 @@ var TaxForm = function (_React$Component) {
         value: function calculate() {
             var _this3 = this;
 
-            fetch('http://localhost:8080/calculate-tax', {
+            fetch('/calculate-tax', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
