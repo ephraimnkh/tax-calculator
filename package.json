@@ -91,7 +91,7 @@
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
     "dev": "nodemon server.js",
     "start:dev": "concurrently \"npm run setup-app\" \"npm run jsxpp\" \"npm run dev\"",
-    "start": "node server.js",
+    "start": "npm run setup-app && node server.js",
     "setup-app": "npm run generate-tax-config && npm run generate-tax-files"
   },
   "keywords": [],
