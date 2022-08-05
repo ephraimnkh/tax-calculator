@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const ejs = require('ejs');
 const app = express();
-const port = process.argv[2] ? process.argv[2] : 8080;
+const port = 8080;
 
 app.use(cors());
 
