@@ -2,9 +2,6 @@
 node_modules
 
 # Files
-stuff.txt
 css/dev.css
 assets/*
 config/taxConfig.js
-assetscopy/*
-configcopy/*
