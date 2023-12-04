@@ -117,7 +117,7 @@ years.forEach(year => {
 
 async function saveDataToFileInAssets(data, fileName) {
     try {
-        await fs.writeJson(`assets/${fileName}`, data);
+        await fs.writeJson(`assets/${fileName}`, data, { spaces: 2 });
         console.log(`File ${fileName} created. Find in assets folder.`);
     } catch (error) {
         console.error(`Error while trying to create tax rate file: ${error}`);

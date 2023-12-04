@@ -1,9 +1,8 @@
-const express = require('express');
 const fs = require('fs-extra');
 const axios = require('axios');
 const sanitizeHtml = require('sanitize-html');
 
-if (!fs.existsSync('config/taxConfig.js')) setupServer();
+setupServer();
 
 const sarsTaxYears = [];
 

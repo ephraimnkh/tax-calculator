@@ -17,6 +17,10 @@ describe('Calculate Tax for a 25 year old', () => {
         const monthlyTax = parseFloat(calculateTax(25000, 2022, 25, 'month').monthlyTax);
         expect(monthlyTax).toBeCloseTo(3749.17);
     });
+    test('Calculate Tax with income of R28000/month for tax year 2024', () => {
+        const monthlyTax = parseFloat(calculateTax(28000, 2024, 25, 'month').monthlyTax);
+        expect(monthlyTax).toBeCloseTo(4263.08);
+    });
     test('Calculate Tax with income of R30000/month for tax year 2017', () => {
         const monthlyTax = parseFloat(calculateTax(30000, 2017, 25, 'month').monthlyTax);
         expect(monthlyTax).toBeCloseTo(5698.33);
@@ -68,6 +72,10 @@ describe('Calculate Tax for a 68 year old', () => {
         const monthlyTax = parseFloat(calculateTax(25000, 2022, 68, 'month').monthlyTax);
         expect(monthlyTax).toBeCloseTo(4340.92);
     });
+    test('Calculate Tax with income of R28000/month for tax year 2024', () => {
+        const monthlyTax = parseFloat(calculateTax(28000, 2024, 68, 'month').monthlyTax);
+        expect(monthlyTax).toBeCloseTo(3476.08);
+    });
     test('Calculate Tax with income of R30000/month for tax year 2017', () => {
         const monthlyTax = parseFloat(calculateTax(30000, 2017, 68, 'month').monthlyTax);
         expect(monthlyTax).toBeCloseTo(6206.08);
@@ -118,6 +126,10 @@ describe('Calculate Tax for a 81 year old', () => {
     test('Calculate Tax with income of R25000/month for tax year 2022', () => {
         const monthlyTax = parseFloat(calculateTax(25000, 2022, 81, 'month').monthlyTax);
         expect(monthlyTax).toBeCloseTo(4819.42);
+    });
+    test('Calculate Tax with income of R28000/month for tax year 2024', () => {
+        const monthlyTax = parseFloat(calculateTax(28000, 2024, 81, 'month').monthlyTax);
+        expect(monthlyTax).toBeCloseTo(3214);
     });
     test('Calculate Tax with income of R30000/month for tax year 2017', () => {
         const monthlyTax = parseFloat(calculateTax(30000, 2017, 81, 'month').monthlyTax);
