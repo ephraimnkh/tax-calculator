@@ -14,5 +14,5 @@ Use `npm run generate-new-tax-files` to delete old tax files and generate new on
 
 Use `npm run start:dev` to run the dev server on your machine with the tax calculator.
 
-Use `npm start` to run simple node server with tax calculator.
+Use `npm start` to run the tax calculator app.
 
