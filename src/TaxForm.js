@@ -130,7 +130,7 @@ class TaxForm extends React.Component {
                             <label htmlFor="income" className="form-label">Pick a tax year:</label>
                             <select className="form-select ms-2" name="taxYear" id="taxYear"  value={this.state.taxYear} onChange={this.handleTaxYearChange}>
                                 {taxYears.map((year) => {
-                                    return <option key={year} value={year}>{year}</option>
+                                    return <option key={year} value={year}>{year} (Mar {year - 1} - Feb {year})</option>
                                 })}
                             </select>
                         </div>

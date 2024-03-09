@@ -16,7 +16,7 @@ async function setupServer(){
 
             let taxYear = new Date().getFullYear() + 1;
             while (sarsTaxPage.includes('table') && sarsTaxPage.includes('/table') && sarsTaxPage.includes(`${taxYear} tax year`)){
-                let indexStart = sarsTaxPage.indexOf(`${taxYear--} tax year`);
+                let indexStart = sarsTaxPage.indexOf(`${taxYear} tax year`);
                 let tableIndexStart = sarsTaxPage.indexOf(`<table`);
                 let tableIndexEnd = sarsTaxPage.indexOf(`</table>`) + 8;
                 let indexEnd = tableIndexEnd;
@@ -25,6 +25,18 @@ async function setupServer(){
                 sarsTaxPage = sarsTaxPage.substring(indexEnd);
                 let taxObject = { taxYear: parseInt(taxTableYear.substring(0,4)), taxTable: taxTableText };
                 if (parseInt(taxTableYear.substring(0,4)) !== 2014) taxObjects.push(taxObject);
+                /**
+                 * Since the 2025 tax year is the same as the 2024 tax year those objects will be created together 
+                 * and the tax year will moved to 2023 for the creation of the next tax object.
+                 */
+                if (taxYear === 2025) {
+                    taxYear -= 2;
+                    const taxObjectClone = { ...taxObject };
+                    const taxObject2024 = Object.assign(taxObjectClone, { taxYear: 2024 });
+                    taxObjects.push(taxObject2024);
+                } else {
+                    taxYear--;
+                }
             }
     
             while (sarsTaxPage.includes('Tax Rebates') || sarsTaxPage.includes('Tax Thresholds')){
@@ -189,19 +201,27 @@ function createThresholdsArray(taxThresholdTable) {
         allowedTags: ['tr', 'td'],
         allowedAttributes: {}
     });
+    // Remove <tr> <td> tags and space the data between them
     let cleanArray = clean.replace(/<tr>/g, '').replace(/<td>/g, '').replace(/<\/tr>/g, ',').replace(/<\/td>/g,'   ').split(',');
+    // Remove any array values that contain no text
     cleanArray = cleanArray.filter(value => value.length > 0);
+    // Remove any array values that contain no number information
     cleanArray = cleanArray.filter(value => value.search(/[0-9]/g) !== -1);
+    // Remove any text that remains in the array
     cleanArray.forEach((value, index, array) => {
         array[index] = value.replace('Under 65', '')
         .replace('65 an older', '')
         .replace('75 and older', '');
     });
+    /**
+     * \u200B refers to Zero Width White Spaces and we remove them from each value in the array
+     * as they interfere with the smooth operation of data extraction below.
+     */
     cleanArray.forEach((value, index, array) => {
-        array[index] = value.trim();
+        array[index] = value.replace(/\u200B/g, '').trim();
     });
     cleanArray.forEach((value, index, array) => {
-        array[index] = value.replace(/\s\s+/g, ',').replace(/ /g, '').replace(',R', 'R').replace(/R/g, '');
+        array[index] = value.replace(/\s\s+/g, ',').replace(/ /g, '').replace(/R/g, '');
     });
     
     let cleanSplitArray = [];

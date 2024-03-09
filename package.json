@@ -86,6 +86,8 @@
   },
   "scripts": {
     "test": "jest",
+    "clean-assets": "rm -rf ./assets/*",
+    "generate-new-tax-files": "npm run clean-assets && node ./helpers/taxExtractor.mjs",
     "generate-tax-files": "node ./helpers/taxExtractor.mjs",
     "generate-tax-config": "node generate-tax-config.js",
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",

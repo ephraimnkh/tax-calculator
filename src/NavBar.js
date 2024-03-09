@@ -1,18 +1,53 @@
 class NavBar extends React.Component {
     constructor(props){
         super(props);
-        this.state = { style: 'style.css' }
         this.switchStyle = this.switchStyle.bind(this);
         this.styles = ['style.css', 'dark-style.css'];
+        this.lightModeStyleSheetName = this.styles[0];
+        this.darkModeStyleSheetName = this.styles[1];
+        this.state = { style: 'style.css' };
+    }
+    
+    setInitialStyleSheet(){
+        const themeFromLocalStorage = localStorage.getItem('theme');
+        let newStyle;
+        if (themeFromLocalStorage) {
+            newStyle = themeFromLocalStorage === 'dark' ? this.darkModeStyleSheetName : this.lightModeStyleSheetName;
+            this.updateStyleInState(newStyle);
+        } else {
+            const useDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (useDarkMode) newStyle = this.darkModeStyleSheetName;
+            else newStyle = this.lightModeStyleSheetName;
+            this.updateStyleInState(newStyle);
+        }
+        this.setStyle(newStyle);
     }
 
+    componentDidMount() {
+        this.setInitialStyleSheet();
+    }
+    
     switchStyle(){
-        let newStyle = this.state.style === this.styles[0] ? this.styles[1] : this.styles[0];
-        this.setState({style: newStyle});
-        let appStyle = document.getElementById('app-style');
-        appStyle.setAttribute('href', newStyle);
-        let styleSwitchButton = document.getElementById('styleSwitchButton');
-        styleSwitchButton.innerHTML = this.state.style === this.styles[0] ? "Switch to Light Mode" : "Switch to Dark Mode";
+        try {
+            const newStyle = this.state.style === this.lightModeStyleSheetName ? this.darkModeStyleSheetName : this.lightModeStyleSheetName;
+            this.updateStyleInState(newStyle);
+            const theme = newStyle === this.lightModeStyleSheetName ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+            this.setStyle(newStyle);
+        } catch (error) {
+            console.error(`localStorage.setItem(key: ${key}, item: ${item}) error:`, error);
+        }
+    }
+    
+    updateStyleInState(newStyle) {
+        this.setState({ style: newStyle });
+    }
+    
+    setStyle(styleSheetName) {
+        const appStyle = document.getElementById('app-style');
+        appStyle.setAttribute('href', styleSheetName);
+        const styleSwitchButton = document.getElementById('styleSwitchButton');
+        styleSwitchButton.innerHTML = styleSheetName === this.darkModeStyleSheetName ? "Switch to Light Mode" : "Switch to Dark Mode";
     }
 
     render(){
