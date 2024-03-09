@@ -87,13 +87,13 @@
   "scripts": {
     "test": "jest",
     "clean-assets": "rm -rf ./assets/*",
-    "generate-new-tax-files": "npm run clean-assets && node ./helpers/taxExtractor.mjs",
+    "generate-new-tax-files": "npm run clean-assets && npm run setup-app",
     "generate-tax-files": "node ./helpers/taxExtractor.mjs",
     "generate-tax-config": "node generate-tax-config.js",
     "jsxpp": "npx babel --watch src --out-dir js --presets react-app/prod",
     "dev": "nodemon server.js",
     "start:dev": "concurrently \"npm run setup-app\" \"npm run jsxpp\" \"npm run dev\"",
-    "start": "npm run setup-app && node server.js",
+    "start": "npm run generate-new-tax-files && node server.js",
     "setup-app": "npm run generate-tax-config && npm run generate-tax-files"
   },
   "keywords": [],

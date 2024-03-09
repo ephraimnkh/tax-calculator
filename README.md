@@ -1,4 +1,4 @@
-## SARS Tax Calculator 
+## South African Tax Calculator 
 
 Just a fun little project to calculate how much tax you owe in South Africa.
 
@@ -10,5 +10,9 @@ Use `npm run setup-app` to setup all the neccessary Tax Information from SARS fo
 
 Use `npm test` test the Tax Calculator's calculateTax function. Tests can only be run once the app is setup.
 
+Use `npm run generate-new-tax-files` to delete old tax files and generate new ones.
+
 Use `npm run start:dev` to run the dev server on your machine with the tax calculator.
+
+Use `npm start` to run simple node server with tax calculator.
 
