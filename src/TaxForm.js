@@ -1,7 +1,13 @@
 class TaxForm extends React.Component {
     constructor(props){
         super(props);
-        this.state = {income: '', age: '', taxYear: 2023, monthOrYear: 'month', taxObject: '', years: []};
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+        const currentMonthIsMarchOrLater = currentMonth > 1;
+        let latestTaxYear = currentYear;
+        if (currentMonthIsMarchOrLater) latestTaxYear = currentYear + 1;
+        this.state = { income: '', age: '', taxYear: latestTaxYear, monthOrYear: 'month', taxObject: '', years: []};
         this.handleIncomeChange = this.handleIncomeChange.bind(this);
         this.handleMonthOrYearChange = this.handleMonthOrYearChange.bind(this);
         this.handleAgeChange = this.handleAgeChange.bind(this);
